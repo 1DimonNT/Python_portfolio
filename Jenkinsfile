@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'python3-jenkins-agent'
-    }
+    agent any
 
     environment {
         SELENOID_URL = 'ru.selenoid.autotests.cloud/wd/hub'
