@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'python3'
+        label 'python3-jenkins-agent'
     }
 
     environment {
