@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'python3'
+    }
 
     environment {
         SELENOID_URL = 'ru.selenoid.autotests.cloud/wd/hub'
@@ -26,7 +28,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                    python --version
+                    pip install --upgrade pip
                     pip install -r requirements.txt
                 '''
                 echo '✅ Зависимости установлены'
