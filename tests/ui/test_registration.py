@@ -44,3 +44,9 @@ class TestSauceDemo:
             title = driver.find_element(By.CLASS_NAME, "title").text
             assert title == "Products"
             add_screenshot(driver, "📸 5. Products page verified - SUCCESS")
+
+            @allure.title("Test that fails to check screenshot")
+            def test_fail_screenshot(driver):
+                driver.get("https://demoqa.com")
+                # Этот тест упадёт, потому что элемента нет
+                driver.find_element(By.ID, "non_existent_element").click()
