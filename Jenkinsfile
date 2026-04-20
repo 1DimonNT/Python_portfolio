@@ -14,7 +14,7 @@ pipeline {
         WINDOW_SIZE = '1920,1080'
         TIMEOUT = '30'
         TELEGRAM_TOKEN = credentials('telegram-token')
-        TELEGRAM_CHAT_ID = credentials('telegram-chat-id')
+        TELEGRAM_CHAT_ID = credentials('telegram_chat_id')
     }
 
     stages {
