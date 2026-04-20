@@ -1,0 +1,14 @@
+# Python 
+__pycache__/ 
+*.py[cod] 
+.venv/ 
+venv/ 
+.env 
+.pytest_cache/ 
+allure-results/ 
+allure-report/ 
+.idea/ 
+.vscode/ 
+resources/ 
+Python_portfolio.txt
+fff.py
