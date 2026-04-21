@@ -30,8 +30,20 @@ def driver(request):
                 "videoName": f"{request.node.name}.mp4"
             }
         }
-        options.capabilities.update(capabilities)
-        selenoid_url = f'https://{settings.SELENOID_USER}:{settings.SELENOID_PASSWORD}@{settings.SELENOID_URL}'
+        options.set_capability("browserName", settings.BROWSER)
+        options.set_capability("browserVersion", settings.BROWSER_VERSION)
+        options.set_capability("selenoid:options", {
+            "enableVNC": True,
+            "enableVideo": True,
+            "videoName": f"{request.node.name}.mp4"
+        })
+
+        # Убираем https:// или http:// если они уже есть в URL
+        selenoid_host = settings.SELENOID_URL.replace('https://', '').replace('http://', '')
+        # Убираем слеш в конце если есть
+        selenoid_host = selenoid_host.rstrip('/')
+
+        selenoid_url = f'https://{settings.SELENOID_USER}:{settings.SELENOID_PASSWORD}@{selenoid_host}'
         driver = webdriver.Remote(command_executor=selenoid_url, options=options)
         print(f"✅ Running on Selenoid: {selenoid_url}")
     else:
