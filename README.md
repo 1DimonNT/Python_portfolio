@@ -11,6 +11,9 @@
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=1DimonNT&style=flat-square&color=blue" />
+  <a href="https://t.me/qa_guru_ivantsov_bot">
+    <img src="https://img.shields.io/badge/Telegram-Bot-blue?style=flat-square&logo=telegram" />
+  </a>
 </p>
 
 ---
