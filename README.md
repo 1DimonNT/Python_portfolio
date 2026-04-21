@@ -159,6 +159,31 @@ allure serve allure-results
 | 📄 HTML | Page Source для отладки |
 | 📋 Логи | Консольные логи браузера |
 
+## 📱 Telegram-уведомления
+
+После каждой сборки в Jenkins результаты тестов автоматически отправляются в Telegram с графиком прохождения и ссылкой на Allure-отчёт.
+
+### 📸 Пример уведомлений:
+
+<p align="center">
+  <img src="images/telegram-notifications.jpg" alt="Telegram Notifications" width="500"/>
+</p>
+
+*На скриншоте: сборка #44 (⚠️ 4 passed, 2 failed) и сборка #45 (✅ 6 passed). Бот показывает красный график при ошибках и зелёный при 100% прохождении.*
+
+### 🔧 Используемые технологии:
+
+| Компонент | Технология |
+|-----------|------------|
+| CI/CD | Jenkins |
+| Отправка | Telegram Bot API |
+| График | allure-notifications.jar v4.11.0 |
+
+### 🔗 Ссылки:
+
+- [📊 Allure Dashboard](https://jenkins.autotests.cloud/job/Python_portfolio_Test/allure/)
+- [🤖 Telegram Bot](https://t.me/qa_guru_ivantsov_bot)
+
 ## 📈 Результаты
 
 | Показатель | Значение |
@@ -195,6 +220,6 @@ allure serve allure-results
 
 ## 📫 Контакты
 <p align="center"> <a href="https://github.com/1DimonNT"><img src="https://img.shields.io/badge/GitHub-1DimonNT-181717?style=for-the-badge&logo=github" /></a> <a href="https://t.me/Ivantsov_Dima"><img src="https://img.shields.io/badge/Telegram-@Ivantsov_Dima-26A5E4?style=for-the-badge&logo=telegram" /></a> <a href="https://vk.com/id4666416"><img src="https://img.shields.io/badge/VK-@id4666416-0077FF?style=for-the-badge&logo=vk&logoColor=white" /></a> <a href="mailto:1DimonNT@gmail.com"><img src="https://img.shields.io/badge/Email-1DimonNT%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" /></a> </p>
-*© 2025 Дмитрий Иванцов*
+*© 2026 Дмитрий Иванцов*
 
 
