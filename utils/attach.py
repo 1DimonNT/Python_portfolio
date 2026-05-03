@@ -22,7 +22,7 @@ def add_page_source(driver, name='page_source'):
 
 def add_video(driver, name=None):
     session_id = driver.session_id
-    video_url = f"https://ru.selenoid.autotests.cloud/video/{session_id}.mp4"
+    video_url = f"https://selenoid.autotests.cloud/video/{session_id}.mp4"
     video_name = name if name else f'video_{session_id}'
     html = f"""<html><body><video width='100%' height='100%' controls autoplay>
     <source src='{video_url}' type='video/mp4'>
