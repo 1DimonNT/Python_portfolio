@@ -24,8 +24,8 @@ def add_page_source(driver, name='page_source'):
 
 
 def add_video(driver, name=None):
-    """Прикрепляет видео как HTML с плеером"""
     session_id = driver.session_id
+    # Видео всегда доступно на selenoid.autotests.cloud (без ru. в начале)
     video_url = f"https://selenoid.autotests.cloud/video/{session_id}.mp4"
     video_name = name if name else f'video_{session_id}'
     html = f"""<html><body><video width='100%' height='100%' controls autoplay>
