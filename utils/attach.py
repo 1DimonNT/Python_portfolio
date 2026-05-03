@@ -3,13 +3,11 @@ from allure_commons.types import AttachmentType
 
 
 def add_screenshot(driver, name='screenshot'):
-    """Прикрепляет скриншот с указанным именем"""
     png = driver.get_screenshot_as_png()
     allure.attach(body=png, name=name, attachment_type=AttachmentType.PNG, extension='.png')
 
 
 def add_console_logs(driver, name='browser_logs'):
-    """Прикрепляет консольные логи"""
     try:
         log = "".join(f'{text}\n' for text in driver.execute("getLog", {'type': 'browser'})['value'])
         allure.attach(log, name, AttachmentType.TEXT, '.log')
@@ -18,7 +16,6 @@ def add_console_logs(driver, name='browser_logs'):
 
 
 def add_page_source(driver, name='page_source'):
-    """Прикрепляет HTML страницы"""
     html = driver.page_source
     allure.attach(html, name, AttachmentType.HTML, '.html')
 
