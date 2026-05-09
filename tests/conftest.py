@@ -42,7 +42,7 @@ def driver(request):
     attach.add_console_logs(driver)
 
     if 'SELENOID_URL' in os.environ:
-        attach.add_video(driver)
+        attach.add_video(driver, name=request.node.name)
 
     driver.quit()
 

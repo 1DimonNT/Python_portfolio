@@ -23,8 +23,8 @@ def add_page_source(driver, name='page_source'):
 
 
 def add_video(driver, name=None):
-    # Нужно дождаться, пока Selenoid обработает видео
-    time.sleep(2)
+    # Ждём, пока видео обработается
+    time.sleep(3)
 
     if name:
         video_url = f"https://selenoid.autotests.cloud/video/{name}.mp4"
@@ -33,7 +33,7 @@ def add_video(driver, name=None):
 
     try:
         response = requests.get(video_url, timeout=30)
-        if response.status_code == 200:
+        if response.status_code == 200 and len(response.content) > 10000:
             allure.attach(
                 body=response.content,
                 name=name if name else f"video_{driver.session_id}",
@@ -41,15 +41,14 @@ def add_video(driver, name=None):
                 extension='.mp4'
             )
         else:
-            # fallback: прикрепляем ссылку текстом, если видео недоступно
             allure.attach(
-                f"Видео не найдено по ссылке: {video_url}",
+                f"Видео не найдено: {video_url} (status: {response.status_code})",
                 name="video_error",
                 attachment_type=AttachmentType.TEXT
             )
     except Exception as e:
         allure.attach(
-            f"Ошибка при скачивании видео: {str(e)}",
+            f"Ошибка: {str(e)}",
             name="video_error",
             attachment_type=AttachmentType.TEXT
         )
