@@ -1,7 +1,9 @@
+# utils/attach.py
 import allure
 from allure_commons.types import AttachmentType
 import requests
 import time
+from config.settings import settings
 
 
 def add_screenshot(driver, name='screenshot'):
@@ -23,20 +25,19 @@ def add_page_source(driver, name='page_source'):
 
 
 def add_video(driver, name=None):
-    # Ждём, пока видео обработается
+    """Добавить видео из Selenoid в отчет Allure"""
     time.sleep(3)
 
-    if name:
-        video_url = f"https://selenoid.autotests.cloud/video/{name}.mp4"
-    else:
-        video_url = f"https://selenoid.autotests.cloud/video/{driver.session_id}.mp4"
+    # Используем имя сессии или переданное имя
+    video_name = name if name else driver.session_id
+    video_url = f"{settings.SELENOID_VIDEO_URL}/{video_name}.mp4"
 
     try:
-        response = requests.get(video_url, timeout=30)
+        response = requests.get(video_url, timeout=settings.VIDEO_DOWNLOAD_TIMEOUT)
         if response.status_code == 200 and len(response.content) > 10000:
             allure.attach(
                 body=response.content,
-                name=name if name else f"video_{driver.session_id}",
+                name=video_name,
                 attachment_type=AttachmentType.MP4,
                 extension='.mp4'
             )
@@ -48,7 +49,7 @@ def add_video(driver, name=None):
             )
     except Exception as e:
         allure.attach(
-            f"Ошибка: {str(e)}",
+            f"Ошибка при загрузке видео: {str(e)}",
             name="video_error",
             attachment_type=AttachmentType.TEXT
         )

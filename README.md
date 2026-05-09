@@ -18,46 +18,6 @@
 
 ---
 
-## 🎓 Обо мне
-
-Я закончил **Уральский Государственный Педагогический Университет**
-
-**Специальность:** Предприниматель-технолог
-
-Затем прошел обучение в **QA.GURU**
-
-**Курс:** [Инженер по автоматизации тестирования на Python](https://qa.guru/python)
-
----
-
-## 🛠 Навыки
-
-| Категория | Технологии |
-|-----------|------------|
-| **API** | REST API, JSON, Postman, Requests |
-| **UI** | Selenium, Page Object |
-| **CI/CD** | Jenkins, GitHub Actions |
-| **Отчетность** | Allure (скриншоты, логи, видео) |
-| **Контейнеризация** | Selenoid, Docker |
-| **Архитектура** | YAGNI, KISS, SOLID, DRY |
-| **VCS** | Git, GitHub |
-| **Веб-разработка** | HTML5, CSS3, SEO, Schema.org |
-
----
-
-## 📦 Что я умею
-
-- ✅ Создавать тестовые проекты с нуля
-- ✅ Строить архитектуру автотестов (Page Object)
-- ✅ Тестировать API (Requests + Allure)
-- ✅ Создавать UI-автотесты (Selenium)
-- ✅ Настраивать CI/CD в Jenkins
-- ✅ Генерировать Allure отчеты с вложениями
-- ✅ Отправлять уведомления в Telegram
-- ✅ Создавать и настраивать сайты (HTML, CSS, SEO)
-
----
-
 ## 🔧 Инструменты
 
 <p align="center">
@@ -68,57 +28,100 @@
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
   <img src="https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white" />
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
+  <img src="https://img.shields.io/badge/Requests-00599C?style=for-the-badge&logo=python&logoColor=white" />
 </p>
 
 ---
 
-## 📁 Проект 1: Test Automation Framework
+## 📁 Проект: Test Automation Framework
 
 Демонстрационный проект, показывающий навыки автоматизации тестирования. Фреймворк покрывает **UI** и **API** тесты с подробными Allure-отчётами.
 
-### 🏗️ Архитектура проекта
+### 🎯 Цель проекта
+
+Автоматизация тестирования веб-приложения **SauceDemo** и **JSONPlaceholder API** с использованием современных инструментов и подходов к тестированию.
+
+### 🔧 Стек технологий
+
+| Категория | Технологии |
+|-----------|------------|
+| **Язык** | Python 3.12 |
+| **Фреймворки** | Pytest, Selenium |
+| **API тесты** | Requests |
+| **Отчеты** | Allure Framework |
+| **CI/CD** | Jenkins |
+| **Контейнеризация** | Selenoid, Docker |
+| **Управление тестами** | Allure TestOps |
+| **Баг-трекинг** | Jira |
+| **Уведомления** | Telegram Bot |
+
+---
+
+## 🏗️ Архитектура проекта
 
 ```text
 Python_portfolio/
-├── config/
-│   ├── settings.py
-│   └── __init__.py
-├── models/
-│   └── user.py
-├── pages/
-│   └── registration_page.py
-├── tests/
-│   ├── api/
-│   │   └── test_reqres.py
-│   └── ui/
-│       ├── test_registration.py
-│       └── test_registration_demoqa.py
-├── utils/
-│   └── attach.py
-├── .env
-├── pytest.ini
-├── requirements.txt
+├── api/                      # API клиент и модели
+│   ├── client.py             # Базовый HTTP клиент
+│   ├── models.py             # dataclass модели
+│   └── posts_api.py          # API методы для /posts
+├── config/                   # Конфигурация
+│   └── settings.py           # Настройки из .env
+├── models/                   # Модели данных для UI
+│   └── user.py               # Пользовательские данные
+├── pages/                    # Page Object Model
+│   ├── base_page.py          # Базовый класс
+│   ├── login_page.py         # Страница логина
+│   ├── products_page.py      # Страница товаров
+│   ├── cart_page.py          # Страница корзины
+│   └── checkout_page.py      # Страница оформления
+├── tests/                    # Тесты
+│   ├── api/                  # API тесты (7 шт)
+│   │   └── test_posts_api.py
+│   ├── ui/                   # UI тесты (7 шт)
+│   │   └── test_saucedemo.py
+│   └── conftest.py           # Фикстуры и хуки
+├── utils/                    # Утилиты
+│   └── attach.py             # Allure аттачменты
+├── notifications/            # Telegram уведомления
+│   ├── allure-notifications.jar
+│   └── config.json
+├── .env.example              # Пример переменных окружения
+├── pytest.ini                # Настройки pytest
+├── requirements.txt          # Зависимости
 └── README.md
 ```
-### ✅ Тестовое покрытие
 
-#### 🌐 UI Тесты
+---
 
-| Сайт | Сценарий | Статус |
-|------|----------|--------|
-| SauceDemo | Успешный логин | ✅ |
-| DemoQA | Регистрация студента | ✅ |
+## ✅ Тестовое покрытие
 
-#### 🔌 API Тесты (JSONPlaceholder)
+### 🌐 UI Тесты (SauceDemo) — 7 тестов
+
+| Сценарий | Статус |
+|----------|--------|
+| Успешный логин | ✅ |
+| Логин с неверным паролем | ✅ |
+| Сортировка товаров по цене | ✅ |
+| Добавление товара в корзину | ✅ |
+| Оформление заказа | ✅ |
+| Проверка счетчика корзины | ✅ |
+| Минимальный checkout | ✅ |
+
+### 🔌 API Тесты (JSONPlaceholder) — 7 тестов
 
 | Метод | Эндпоинт | Статус |
 |-------|----------|--------|
 | GET | /posts | ✅ |
+| GET | /posts/{id} | ✅ |
+| GET | /posts?userId={id} | ✅ |
 | POST | /posts | ✅ |
 | PUT | /posts/{id} | ✅ |
 | DELETE | /posts/{id} | ✅ |
+| Проверка существования | /posts/{id} | ✅ |
+
+---
+
 ## 🚀 Запуск проекта
 
 ### 1. Клонирование и установка
@@ -127,28 +130,67 @@ Python_portfolio/
 git clone https://github.com/1DimonNT/Python_portfolio.git
 cd Python_portfolio
 python -m venv .venv
+
+# Windows
 .venv\Scripts\activate
+
+# Linux/Mac
+source .venv/bin/activate
+
 pip install -r requirements.txt
 ```
 ### 2. Настройка окружения
-Создайте файл .env:
+
+Создайте файл `.env` по примеру из `.env.example`:
+
+```bash
+cp .env.example .env
 ```
-SELENOID_URL=ru.selenoid.autotests.cloud/wd/hub
-SELENOID_USER=user1
-SELENOID_PASSWORD=1234
-BASE_URL=https://demoqa.com
-API_BASE_URL=https://reqres.in/api
+Заполни переменные:
+```bash
+SELENOID_URL=your_selenoid_url
+SELENOID_USER=your_username
+SELENOID_PASSWORD=your_password
+BASE_URL=https://www.saucedemo.com
 BROWSER=chrome
 BROWSER_VERSION=128.0
 WINDOW_SIZE=1920,1080
 TIMEOUT=30
 ```
+
+### 📸 Jenkins Build:
+
+<p align="center">
+  <img src="images/jenkins-build.png" alt="Jenkins Build" width="600"/>
+</p>
+
+### 📊 Allure Report:
+
+<p align="center">
+  <img src="images/allure-report.png" alt="Allure Report" width="600"/>
+</p>
+
 ### 3. Запуск тестов
-``` 
-pytest --alluredir=allure-results -v
+
+```bash
+# Все тесты
+pytest -v
+
+# Только UI тесты
+pytest tests/ui/ -v
+
+# Только API тесты
+pytest tests/api/ -v
+
+# Smoke тесты
+pytest -m smoke -v
 ```
 ### 4. Просмотр Allure-отчёта
-```
+```bash
+# Запуск с генерацией результатов
+pytest --alluredir=allure-results -v
+
+# Просмотр отчета
 allure serve allure-results
 ```
 ## 📊 Отчётность
@@ -161,10 +203,18 @@ allure serve allure-results
 | 🎬 Видео | Полная запись выполнения теста (Selenoid) |
 | 📄 HTML | Page Source для отладки |
 | 📋 Логи | Консольные логи браузера |
+| 📝 API логи|	Request/Response для каждого запроса
+
+🤖 Интеграции
+Инструмент	Назначение	Ссылка
+Jenkins	CI/CD	Dashboard
+Allure TestOps	Тестовая документация	TestOps
+Jira	Баг-трекинг	Jira
+Telegram	Уведомления	Bot
 
 ## 📱 Telegram-уведомления
 
-После каждой сборки в Jenkins результаты тестов автоматически отправляются в Telegram с графиком прохождения и ссылкой на Allure-отчёт.
+После каждой сборки в Jenkins результаты естов автоматически отправляются в Telegram с графиком прохождения и ссылкой на Allure-отчёт.
 
 ### 📸 Пример уведомлений:
 
@@ -193,45 +243,15 @@ allure serve allure-results
 
 | Сборка | Всего | Passed | Failed | Проходимость | Отчет |
 |--------|-------|--------|--------|--------------|-------|
-| #45 | 6 | 6 | 0 | 100% ✅ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/45/allure) |
-| #44 | 6 | 4 | 2 | 67% ⚠️ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/44/allure) |
+| #61 | 9 | 9 | 0 | 100% ✅ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/61/allure) |
+| #51 | 9 | 9 | 0 | 100% ✅ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/51/allure) |
 
 ### Общая статистика проекта:
 
 | Показатель | Значение |
 |------------|----------|
-| Всего тестов | 6 |
-| UI тестов | 2 |
+| Всего тестов | 9 |
+| UI тестов | 5 |
 | API тестов | 4 |
 | Ожидаемая проходимость | 100% ✅ |
-###  🌐 Проект 2: Сайт "Центр Чистоты НТ"
-Этот сайт я полностью разработал и настроил самостоятельно — от идеи до публикации.
-```
-🔗 Ссылка: github.com/1DimonNT/center-chistoty-nt.ru
-```
-### 🛠 Что сделано мной:
-
-| Задача | Реализация |
-|--------|------------|
-| Вёрстка | Полностью адаптивная, семантическая HTML5/CSS3 |
-| Дизайн | Самостоятельно, без фреймворков |
-| SEO | Микроразметка Schema.org, уникальные мета-теги |
-| Оптимизация | WebP, lazy loading, минимизация CSS/JS |
-| Формы | Умная форма заказа с копированием в буфер |
-| Аналитика | Настроил Yandex.Metrika |
-| Хостинг | Настроил GitHub Pages + кастомный домен |
-| Видео | Интеграция Rutube через iframe |
-
-### 📋 Услуги на сайте
-
-- 🧼 Химчистка мебели
-- 🐜 Дезинсекция
-- 🧹 Клининг
-- 💨 Озонация
-- 🕷️ Акарицидная обработка
-
-## 📫 Контакты
-<p align="center"> <a href="https://github.com/1DimonNT"><img src="https://img.shields.io/badge/GitHub-1DimonNT-181717?style=for-the-badge&logo=github" /></a> <a href="https://t.me/Ivantsov_Dima"><img src="https://img.shields.io/badge/Telegram-@Ivantsov_Dima-26A5E4?style=for-the-badge&logo=telegram" /></a> <a href="https://vk.com/id4666416"><img src="https://img.shields.io/badge/VK-@id4666416-0077FF?style=for-the-badge&logo=vk&logoColor=white" /></a> <a href="mailto:1DimonNT@gmail.com"><img src="https://img.shields.io/badge/Email-1DimonNT%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" /></a> </p>
-*© 2026 Дмитрий Иванцов*
-
 

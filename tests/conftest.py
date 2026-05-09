@@ -1,3 +1,4 @@
+# tests/conftest.py
 import os
 import pytest
 from selenium import webdriver
@@ -13,7 +14,8 @@ def driver(request):
     options.add_argument('--disable-blink-features=AutomationControlled')
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
-    if 'SELENOID_URL' in os.environ:
+    if settings.SELENOID_URL and settings.SELENOID_USER and settings.SELENOID_PASSWORD:
+        # Формируем URL с авторизацией
         selenoid_host = settings.SELENOID_URL.replace('https://', '').replace('http://', '').rstrip('/')
         selenoid_url = f'https://{settings.SELENOID_USER}:{settings.SELENOID_PASSWORD}@{selenoid_host}'
 
@@ -28,6 +30,7 @@ def driver(request):
 
         driver = webdriver.Remote(command_executor=selenoid_url, options=options)
     else:
+        # Локальный запуск (без Selenoid)
         from selenium.webdriver.chrome.service import Service
         from webdriver_manager.chrome import ChromeDriverManager
         service = Service(ChromeDriverManager().install())
@@ -41,7 +44,7 @@ def driver(request):
     attach.add_page_source(driver)
     attach.add_console_logs(driver)
 
-    if 'SELENOID_URL' in os.environ:
+    if settings.SELENOID_URL and settings.SELENOID_USER and settings.SELENOID_PASSWORD:
         attach.add_video(driver, name=request.node.name)
 
     driver.quit()
