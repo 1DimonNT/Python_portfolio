@@ -6,25 +6,27 @@ from typing import Optional
 @dataclass
 class Post:
     """Модель поста"""
-    id: int
-    title: str
-    body: str
-    userId: int
+    id: Optional[int] = None
+    title: str = ""
+    body: str = ""
+    userId: int = 0
 
     def to_dict(self) -> dict:
         """Преобразовать в словарь"""
-        return {
-            'id': self.id,
+        result = {
             'title': self.title,
             'body': self.body,
             'userId': self.userId
         }
+        if self.id is not None:
+            result['id'] = self.id
+        return result
 
     @classmethod
     def from_dict(cls, data: dict) -> 'Post':
         """Создать из словаря"""
         return cls(
-            id=data.get('id', 0),
+            id=data.get('id'),
             title=data.get('title', ''),
             body=data.get('body', ''),
             userId=data.get('userId', 0)

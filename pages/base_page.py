@@ -1,4 +1,5 @@
 # pages/base_page.py
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
@@ -8,7 +9,7 @@ from typing import Tuple, Optional, List
 class BasePage:
     """Базовый класс для всех Page Objects"""
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
 

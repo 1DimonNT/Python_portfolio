@@ -26,7 +26,7 @@ def add_page_source(driver, name='page_source'):
 
 def add_video(driver, name=None):
     """Добавить видео из Selenoid в отчет Allure"""
-    time.sleep(3)
+    time.sleep(1)  # ← было 3, теперь 1 секунда
 
     # Пробуем найти видео по имени теста
     video_name = name if name else driver.session_id

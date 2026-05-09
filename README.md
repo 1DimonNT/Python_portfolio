@@ -16,19 +16,27 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://jenkins.autotests.cloud/job/Python_portfolio_Test/">
+    <img src="https://img.shields.io/badge/Jenkins-Job-D24939?style=flat-square&logo=jenkins" />
+  </a>
+  <a href="https://github.com/1DimonNT/Python_portfolio">
+    <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github" />
+  </a>
+</p>
+
 ---
 
 ## 🔧 Инструменты
-
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" />
-  <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" />
-  <img src="https://img.shields.io/badge/Allure-000000?style=for-the-badge&logo=allure&logoColor=white" />
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
-  <img src="https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white" />
-  <img src="https://img.shields.io/badge/Requests-00599C?style=for-the-badge&logo=python&logoColor=white" />
+  🐍 Python &nbsp;&nbsp;|&nbsp;&nbsp;
+  🧪 Selenium &nbsp;&nbsp;|&nbsp;&nbsp;
+  🔧 Jenkins &nbsp;&nbsp;|&nbsp;&nbsp;
+  📊 Allure &nbsp;&nbsp;|&nbsp;&nbsp;
+  🐳 Docker &nbsp;&nbsp;|&nbsp;&nbsp;
+  📦 Git &nbsp;&nbsp;|&nbsp;&nbsp;
+  ✅ Pytest &nbsp;&nbsp;|&nbsp;&nbsp;
+  📡 Requests
 </p>
 
 ---
@@ -84,12 +92,17 @@ Python_portfolio/
 ├── utils/                    # Утилиты
 │   └── attach.py             # Allure аттачменты
 ├── notifications/            # Telegram уведомления
-│   ├── allure-notifications.jar
+│   ├── allure-notifications-4.11.0.jar
 │   └── config.json
+├── images/                   # Скриншоты для README
+│   ├── jenkins-build.png
+│   ├── allure-report.png
+│   └── telegram-notifications.jpg
 ├── .env.example              # Пример переменных окружения
+├── .gitignore                # Игнорируемые файлы
 ├── pytest.ini                # Настройки pytest
 ├── requirements.txt          # Зависимости
-└── README.md
+└── README.md                 # Документация
 ```
 
 ---
@@ -157,34 +170,78 @@ BROWSER_VERSION=128.0
 WINDOW_SIZE=1920,1080
 TIMEOUT=30
 ```
+---
 
-### 📸 Jenkins Build:
+## 🔧 Jenkins Pipeline
 
-<p align="center">
-  <img src="images/jenkins-build.png" alt="Jenkins Build" width="600"/>
-</p>
+Проект настроен на автоматический запуск в Jenkins при пуше в GitHub.
 
-### 📊 Allure Report:
+### 📋 Параметры сборки
 
-<p align="center">
-  <img src="images/allure-report.png" alt="Allure Report" width="600"/>
-</p>
+| Параметр | Значение |
+|----------|----------|
+| **Репозиторий** | [Python_portfolio](https://github.com/1DimonNT/Python_portfolio) |
+| **Ветка** | `main` |
+| **Агент** | `python3-jenkins-agent-1` |
+| **Selenoid URL** | `selenoid.autotests.cloud/wd/hub` |
 
-### 3. Запуск тестов
+### ⚙️ Build Steps
 
 ```bash
+#!/bin/bash
+# Установка зависимостей
+python3 -m venv venv
+. venv/bin/activate
+pip install -r requirements.txt
+
+# Запуск тестов на Selenoid
+export SELENOID_URL="selenoid.autotests.cloud/wd/hub"
+export SELENOID_USER="user1"
+export SELENOID_PASSWORD="1234"
+export BASE_URL="https://www.saucedemo.com"
+
+pytest tests/ --alluredir=allure-results -v
+
+# Ожидание генерации видео
+sleep 10
+```
+### Jenkins Build
+
+<p align="center">
+  <img src="images/jenkins-build.png" alt="Jenkins Build" width="800"/>
+</p>
+
+### Allure Report
+
+<p align="center">
+  <img src="images/allure-report.png" alt="Allure Report" width="800"/>
+</p>
+
+### Telegram Notifications
+
+<p align="center">
+  <img src="images/telegram-notifications.jpg" alt="Telegram Notifications" width="400"/>
+</p>
+---
+### 3. Запуск тестов
+
 # Все тесты
+```bash
 pytest -v
-
+```
 # Только UI тесты
+```bash
 pytest tests/ui/ -v
-
+```
 # Только API тесты
+```bash
 pytest tests/api/ -v
-
+```
 # Smoke тесты
+```bash
 pytest -m smoke -v
 ```
+---
 ### 4. Просмотр Allure-отчёта
 ```bash
 # Запуск с генерацией результатов
@@ -243,15 +300,15 @@ Telegram	Уведомления	Bot
 
 | Сборка | Всего | Passed | Failed | Проходимость | Отчет |
 |--------|-------|--------|--------|--------------|-------|
-| #61 | 9 | 9 | 0 | 100% ✅ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/61/allure) |
-| #51 | 9 | 9 | 0 | 100% ✅ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/51/allure) |
+| #61 | 14    | 14     | 0 | 100% ✅ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/61/allure) |
+| #51 | 14    | 14     | 0 | 100% ✅ | [Allure](https://jenkins.autotests.cloud/job/Python_portfolio_Test/51/allure) |
 
 ### Общая статистика проекта:
 
 | Показатель | Значение |
 |------------|----------|
-| Всего тестов | 9 |
-| UI тестов | 5 |
-| API тестов | 4 |
+| Всего тестов | 14 |
+| UI тестов | 7 |
+| API тестов | 7 |
 | Ожидаемая проходимость | 100% ✅ |
 
