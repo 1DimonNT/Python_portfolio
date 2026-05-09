@@ -28,28 +28,58 @@ def add_video(driver, name=None):
     """Добавить видео из Selenoid в отчет Allure"""
     time.sleep(3)
 
-    # Используем имя сессии или переданное имя
+    # Пробуем найти видео по имени теста
     video_name = name if name else driver.session_id
-    video_url = f"{settings.SELENOID_VIDEO_URL}/{video_name}.mp4"
 
+    # Вариант 1: по имени теста
+    video_url_by_name = f"{settings.SELENOID_VIDEO_URL}/{video_name}.mp4"
+
+    # Вариант 2: по session_id (более надежно)
+    video_url_by_session = f"{settings.SELENOID_VIDEO_URL}/{driver.session_id}.mp4"
+
+    video_found = False
+
+    # Сначала пробуем по имени теста
     try:
-        response = requests.get(video_url, timeout=settings.VIDEO_DOWNLOAD_TIMEOUT)
+        response = requests.get(video_url_by_name, timeout=settings.VIDEO_DOWNLOAD_TIMEOUT)
         if response.status_code == 200 and len(response.content) > 10000:
             allure.attach(
                 body=response.content,
-                name=video_name,
+                name=f"video_{video_name}",
                 attachment_type=AttachmentType.MP4,
                 extension='.mp4'
             )
-        else:
-            allure.attach(
-                f"Видео не найдено: {video_url} (status: {response.status_code})",
-                name="video_error",
-                attachment_type=AttachmentType.TEXT
-            )
-    except Exception as e:
+            video_found = True
+    except Exception:
+        pass
+
+    # Если не нашли - пробуем по session_id
+    if not video_found:
+        try:
+            response = requests.get(video_url_by_session, timeout=settings.VIDEO_DOWNLOAD_TIMEOUT)
+            if response.status_code == 200 and len(response.content) > 10000:
+                allure.attach(
+                    body=response.content,
+                    name=f"video_{driver.session_id}",
+                    attachment_type=AttachmentType.MP4,
+                    extension='.mp4'
+                )
+                video_found = True
+        except Exception:
+            pass
+
+    # Если видео нет - пишем информативное сообщение (не ошибку)
+    if not video_found:
         allure.attach(
-            f"Ошибка при загрузке видео: {str(e)}",
-            name="video_error",
+            f"ℹ️ Видео не найдено для теста '{video_name}'\n"
+            f"Session ID: {driver.session_id}\n"
+            f"Проверенные URL:\n"
+            f"  - {video_url_by_name}\n"
+            f"  - {video_url_by_session}\n\n"
+            f"Возможные причины:\n"
+            f"  - Тест завершился слишком быстро\n"
+            f"  - Проблема на стороне Selenoid\n"
+            f"  - Видео еще не сгенерировано",
+            name="video_not_available",
             attachment_type=AttachmentType.TEXT
         )
